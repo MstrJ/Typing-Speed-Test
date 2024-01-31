@@ -2,7 +2,7 @@ import { twMerge } from "tailwind-merge";
 
 export const Undraw = ({ className }: { className?: any }) => (
   <svg
-    width="480"
+    width="500"
     // height="360"
     viewBox="0 0 400 300"
     fill="none"
