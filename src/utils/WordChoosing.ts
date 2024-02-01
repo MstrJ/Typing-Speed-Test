@@ -3,7 +3,7 @@ const WordChossing = (words: string[], setWord: any, setWords: any) => {
   let chossedWord = words[0];
   setWord(chossedWord);
 
-  let newWords = words.filter((word) => word !== chossedWord);
-  setWords(newWords);
+  words.shift();
+  setWords(words);
 };
 export default WordChossing;

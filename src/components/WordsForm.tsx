@@ -18,9 +18,13 @@ const WordsForm = () => {
   const [isGameFinished, setIsGameFinished] = useState<boolean>(false);
 
   useEffect(() => {
-    const newWords = GetWords();
-    setWords(newWords);
-    WordChossing(newWords, setWord, setWords);
+    const fetchWords = async () => {
+      const newWords = await GetWords();
+      setWords(newWords);
+      WordChossing(newWords, setWord, setWords);
+    };
+
+    fetchWords();
   }, []);
 
   useEffect(() => {
@@ -43,7 +47,7 @@ const WordsForm = () => {
 
     setIsValid(invalidLettersIndex.length === 0);
 
-    if (validLetterIndex.length === word.length) {
+    if (validLetterIndex.length === word.length && inputWord === word) {
       setInputWord("");
       WordChossing(words, setWord, setWords);
     }
@@ -51,7 +55,7 @@ const WordsForm = () => {
 
   return (
     <div className="flex flex-col justify-center items-center mt-24  text-2xl">
-      <div className="my-8 flex flex-row">
+      <div className="my-8 flex flex-row ml-12">
         {word &&
           words &&
           word.split("").map((letter, i) => {
@@ -70,9 +74,11 @@ const WordsForm = () => {
               </div>
             );
           })}
-        {/* // todo: fix ui */}
-        {/* <div>{words[words.findIndex((w) => w === word) + 1]}</div> */}
-        {/* <div> {words.join(" ")}</div> */}
+        <div className="flex flex-row gap-2 ml-2">
+          {Array.from({ length: 3 }, (_, i) => (
+            <div>{words[i]}</div>
+          ))}
+        </div>
       </div>
       <Input
         className={"mt-3 ml-2"}
