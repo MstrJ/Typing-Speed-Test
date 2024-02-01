@@ -1,14 +1,14 @@
-@import url("https://fonts.googleapis.com/css2?family=Bungee+Shade&family=Sniglet&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Bungee+Shade&family=Hanuman:wght@100;300;400;700&family=Sniglet&display=swap");
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 :root {
-  --foreground: #ffffff;
+  --foreground: #e6e6e6;
   --background: #0f1219;
 }
 
 body {
-  font-family: "Sniglet", sans-serif;
+  font-family: "Hanuman", serif;
   color: var(--foreground);
   background: var(--background);
 }

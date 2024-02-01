@@ -13,11 +13,13 @@ const Input = (props: {
       type="text"
       value={props.inputWord}
       onChange={(e) => props.setInputWord(e.target.value)}
-      placeholder="Write word..."
+      placeholder=""
       disabled={props.disabled}
-      className={`${twMerge(props.className)}  outline-none ring-0 ${
+      className={`${twMerge(props.className)} ${
+        props.disabled ? " cursor-not-allowed" : ""
+      }  outline-none ring-0 ${
         props.isValid ? "text-white  ring-[#3F3D56]" : "text-dred  ring-dred"
-      }  rounded-md bg-transparent  active:ring-2 duration-200 focus:ring-4 px-2 py-3  `}
+      }  rounded-md bg-transparent c   duration-200 focus:ring-4 px-0 py-2 focus:border-0  `}
     />
   );
 };
