@@ -1,14 +1,7 @@
-import WordsForm from "../components/WordsForm";
+import MainPageComponent from "@/components/MainPageComponent";
 
-const Main = () => {
-  return (
-    <main className="size-screen">
-      <h1 className="text-center text-[#E6E6E6] text-[82px] font-Bungee">
-        Typing Speed Test
-      </h1>
-      <WordsForm />
-    </main>
-  );
+const MainPage = () => {
+  return <MainPageComponent />;
 };
 
-export default Main;
+export default MainPage;

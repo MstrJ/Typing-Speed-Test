@@ -1,9 +1,10 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import Input from "./Input";
 import LettersChecker from "@/utils/LettersChecker";
 import WordChossing from "@/utils/WordChoosing";
 import GetWords from "@/utils/GetWords";
+import WordsDisplayCard from "./WordsDisplayCard";
 
 const WordsForm = () => {
   const [words, setWords] = useState<string[]>([]);
@@ -12,7 +13,7 @@ const WordsForm = () => {
   const [inputWord, setInputWord] = useState<string>("");
   const [isValid, setIsValid] = useState<boolean>(true);
   const [invalidLettersIndex, setInvalidLettersIndex] = useState<number[]>([]);
-  const [validLetterIndex, setValidLetterIndex] = useState<number[]>([]);
+  const [validLettersIndex, setValidLettersIndex] = useState<number[]>([]);
 
   const [isGameStarted, setIsGameStarted] = useState<boolean>(false);
   const [isGameFinished, setIsGameFinished] = useState<boolean>(false);
@@ -23,7 +24,6 @@ const WordsForm = () => {
       setWords(newWords);
       WordChossing(newWords, setWord, setWords);
     };
-
     fetchWords();
   }, []);
 
@@ -34,7 +34,7 @@ const WordsForm = () => {
       inputWord,
       word,
       setInvalidLettersIndex,
-      setValidLetterIndex
+      setValidLettersIndex
     );
   }, [inputWord, word]);
 
@@ -47,39 +47,20 @@ const WordsForm = () => {
 
     setIsValid(invalidLettersIndex.length === 0);
 
-    if (validLetterIndex.length === word.length && inputWord === word) {
+    if (validLettersIndex.length === word.length && inputWord === word) {
       setInputWord("");
-      WordChossing(words, setWord, setWords);
+      if (!isGameFinished) WordChossing(words, setWord, setWords);
     }
-  }, [invalidLettersIndex, validLetterIndex, word, words]);
+  }, [invalidLettersIndex, validLettersIndex, word, words]);
 
   return (
     <div className="flex flex-col justify-center items-center mt-24  text-2xl">
-      <div className="my-8 flex flex-row ml-12">
-        {word &&
-          words &&
-          word.split("").map((letter, i) => {
-            return (
-              <div
-                key={i}
-                className={`${
-                  invalidLettersIndex.includes(i)
-                    ? "text-red-500"
-                    : validLetterIndex.includes(i)
-                    ? "text-green-500"
-                    : "text-white"
-                } `}
-              >
-                {letter}
-              </div>
-            );
-          })}
-        <div className="flex flex-row gap-2 ml-2">
-          {Array.from({ length: 3 }, (_, i) => (
-            <div>{words[i]}</div>
-          ))}
-        </div>
-      </div>
+      <WordsDisplayCard
+        word={word}
+        words={words}
+        invalidLettersIndex={invalidLettersIndex}
+        validLettersIndex={validLettersIndex}
+      />
       <Input
         className={"mt-3 ml-2"}
         isValid={isValid}
