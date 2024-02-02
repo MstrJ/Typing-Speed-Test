@@ -5,7 +5,9 @@ const BackgroundComponent = () => {
   return (
     <>
       <Undraw className={"absolute bottom-0 left-2"} />
-      <div className="absolute right-4 bottom-4">🐰</div>
+      <a className="absolute right-4 bottom-4" href="https://github.com/mstrj">
+        🐰
+      </a>
     </>
   );
 };

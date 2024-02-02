@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { use, useEffect, useState } from "react";
 import Input from "./Input";
 import LettersChecker from "@/utils/LettersChecker";
 import WordChossing from "@/utils/WordChoosing";
@@ -18,39 +18,53 @@ const WordsComponent = () => {
   const [validLettersIndex, setValidLettersIndex] = useState<number[]>([]);
 
   const [isGameStarted, setIsGameStarted] = useState<boolean>(false);
+  const [timer, setTimer] = useState<number>(60);
   const [isGameFinished, setIsGameFinished] = useState<boolean>(false);
 
   // On web load fetching words from the API
-  useEffect(() => {
-    const fetchWords = async () => {
-      const newWords = await GetWords();
-      setWords(newWords);
-      WordChossing(newWords, setWord, setWords);
-    };
+  const fetchWords = async () => {
+    const newWords = await GetWords();
+    WordChossing(newWords, setWord, setWords);
+  };
+
+  const resetGame = () => {
+    setTimer(60);
+    setPassedWords([]);
+    setWord("");
+    setInputWord("");
+    setIsValid(true);
+    setInvalidLettersIndex([]);
+    setValidLettersIndex([]);
+    setIsGameFinished(false);
+    setIsGameStarted(false);
     fetchWords();
+  };
+
+  useEffect(() => {
+    resetGame();
   }, []);
 
   // On word change updating a word validity
   useEffect(() => {
     if (!word) return;
+    if (isGameFinished) return;
     if (!isGameStarted) setIsGameStarted(true);
-    LettersChecker(
-      inputWord,
-      word,
-      setInvalidLettersIndex,
-      setValidLettersIndex
-    );
+
+    if (isGameStarted)
+      LettersChecker(
+        inputWord,
+        word,
+        setInvalidLettersIndex,
+        setValidLettersIndex
+      );
   }, [inputWord]);
 
+  // On game finish reseting the game
   useEffect(() => {
-    if (!word) return;
-    LettersChecker(
-      inputWord,
-      word,
-      setInvalidLettersIndex,
-      setValidLettersIndex
-    );
-  }, [word]);
+    if (isGameFinished && isGameStarted && words) {
+      resetGame();
+    }
+  }, [isGameFinished]);
 
   // On word change checking if the word is valid
   useEffect(() => {
@@ -73,6 +87,8 @@ const WordsComponent = () => {
         isGameStarted={isGameStarted}
         setIsGameFinished={setIsGameFinished}
         passedWords={passedWords}
+        setTimer={setTimer}
+        timer={timer}
       />
       <WordsDisplayCard
         word={word}
@@ -84,6 +100,7 @@ const WordsComponent = () => {
         className={
           "w-[25%] text-center border-2 border-ddark/70 animate-pulse focus:animate-none"
         }
+        isGameStarted={isGameStarted}
         isValid={isValid}
         inputWord={inputWord}
         disabled={isGameFinished}
@@ -93,4 +110,4 @@ const WordsComponent = () => {
   );
 };
 
-export default WordsComponent;
+export default React.memo(WordsComponent);

@@ -8,9 +8,10 @@ const WordsDisplayCard = (props: {
 }) => {
   return (
     <div
-      className={`bg-dgrey/15 mt-8 pl-[324px]
-      } select-none   my-8 flex flex-row truncate text-3xl border-2 rounded-lg py-1.5  border-ddark/60 w-[45%]`}
+      className={`bg-dgrey/15 mt-8 
+      } select-none my-8 flex flex-row truncate text-3xl border-2 rounded-lg py-1.5  border-ddark/60 w-[45%]`}
     >
+      <div className=" lg:px-40 md:px-24 px-6"></div>
       <div className="flex flex-row justify-end  ">
         {props.word &&
           props.words &&

@@ -7,13 +7,14 @@ const Input = (props: {
   setInputWord: React.Dispatch<React.SetStateAction<string>>;
   inputWord: string;
   disabled?: boolean;
+  isGameStarted?: boolean;
 }) => {
   return (
     <input
       type="text"
       value={props.inputWord}
       onChange={(e) => props.setInputWord(e.target.value)}
-      placeholder=""
+      placeholder={`${!props.isGameStarted ? "Write to start" : ""} `}
       disabled={props.disabled}
       className={`${twMerge(props.className)} ${
         props.disabled ? " cursor-not-allowed" : ""
