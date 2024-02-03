@@ -23,6 +23,7 @@ const WordsComponent = () => {
 
   // On web load fetching words from the API
   const fetchWords = async () => {
+    console.log("fetching words");
     const newWords = await GetWords();
     WordChossing(newWords, setWord, setWords);
   };
